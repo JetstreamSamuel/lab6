@@ -1,19 +1,44 @@
 package org.models;
 
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.utils.adapters.XmlDateAdapter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class Movie {
+@XmlRootElement(name="movie")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Movie implements Comparable<Movie>{
+    @XmlElement(name="id")
     private int id;
+
+    @XmlElement(name="name")
     private String name;
+
+    @XmlElement(name="coordinates")
     private Coordinates coordinates;
+
+    @XmlElement(name="creationDate")
+    @XmlJavaTypeAdapter(XmlDateAdapter.class)
     private LocalDateTime creationDate;
+
+    @XmlElement(name="oscarsCount")
     private long oscarsCount;
+
+    @XmlElement(name="usaBoxOffice")
     private long usaBoxOffice;
+
+    @XmlElement(name="tagline")
     private String tagline;
+
+    @XmlElement(name="mpaaRating")
     private MpaaRating mpaaRating;
+
+    @XmlElement(name="director")
     private Person director;
+
+    public Movie() {}
 
     public Movie(String name, Coordinates coordinates, long oscarsCount, long usaBoxOffice,
                  String tagline, MpaaRating mpaaRating, Person director) {
@@ -25,7 +50,7 @@ public class Movie {
         this.mpaaRating = mpaaRating;
         this.director = director;
 
-        id = UUID.randomUUID().hashCode();
+        id = Math.abs(UUID.randomUUID().hashCode());
         creationDate = LocalDateTime.now();
 
     }
@@ -48,9 +73,22 @@ public class Movie {
     public void setUsaBoxOffice(long usaBoxOffice) {this.usaBoxOffice = usaBoxOffice;}
     public void setDirector(Person director) {this.director = director;}
 
-    //TODO
+    @Override
+    public int compareTo(Movie other) {
+        if (other == null) return 1;
+        return Long.compare(oscarsCount, other.getOscarsCount());
+    }
+
     @Override
     public String toString() {
-        return id + " какой-то фильм";
+        return "{id: " + id + "\n" +
+                "Название: " + name + "\n" +
+                "Координаты: " + coordinates + "\n" +
+                "Дата создания: " + creationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")) + "\n" +
+                "Количество оскаров: " + oscarsCount + "\n" +
+                "USA box office: " + usaBoxOffice + "\n" +
+                "Ключевая фраза: " + tagline + "\n" +
+                "Возрастной рейтинг: " + mpaaRating + "\n" +
+                "Директор: " + (director == null ? "Не указан" : director) + "}\n";
     }
 }

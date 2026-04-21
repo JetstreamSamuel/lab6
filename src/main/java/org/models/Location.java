@@ -1,10 +1,24 @@
 package org.models;
 
+
+import jakarta.xml.bind.annotation.*;
+
+@XmlRootElement(name="location")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Location {
+    @XmlElement(name="X")
     private Long x;
+
+    @XmlElement(name="Y")
     private float y;
+
+    @XmlElement(name="Z")
     private Float z;
+
+    @XmlElement(name="name")
     private String name;
+
+    public Location() {}
 
     public Location(Long x, float y, Float z, String name) {
         this.x = x;
@@ -22,4 +36,10 @@ public class Location {
     public void setY(float y) {this.y = y;}
     public void setZ(Float z) {this.z = z;}
     public void setName(String name) {this.name = name;}
+
+    @Override
+    public String toString() {
+        return "{Название: " + name + ", " +
+                "Координаты: ("+x+", "+y+", "+z+")}";
+    }
 }
