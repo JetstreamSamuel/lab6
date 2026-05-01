@@ -2,7 +2,6 @@ package org;
 
 import org.commands.*;
 import org.utils.FileManager;
-
 import java.io.FileInputStream;
 import java.util.Properties;
 import java.util.Scanner;
