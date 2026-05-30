@@ -1,23 +1,22 @@
-package org.commands;
+package org.server.commands;
 
-import org.utils.Context;
+import org.server.service.Context;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class PrintUsaBoxOfficeCommand extends Command{
+    private Context context = Context.getInstance();
     public PrintUsaBoxOfficeCommand() {super("print_field_ascending_usa_box_office");}
 
     @Override
-    public void execute(Context context, String[] args, Scanner scanner) {
+    public String execute() {
         ArrayList<Long> list = new ArrayList<>();
         for (var key : context.getKeys()) {
             list.add(Long.valueOf(context.getElem(key).getUsaBoxOffice()));
         }
         Collections.sort(list);
-        System.out.print("usaBoxOffice в порядке возрастания: ");
-        list.forEach(System.out::print);
-        System.out.print("\n");
+        return list.toString();
+
     }
 
     @Override

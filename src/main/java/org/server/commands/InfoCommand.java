@@ -1,13 +1,16 @@
-package org.commands;
+package org.server.commands;
 
-import org.utils.Context;
-import java.util.Scanner;
+import org.server.service.Context;
 
 public class InfoCommand extends Command{
+    private Context context = Context.getInstance();
+
     public InfoCommand() {super("info");}
 
     @Override
-    public void execute(Context context, String[] args, Scanner scanner) {System.out.println(context.getInfo());}
+    public String execute() {
+        return context.getInfo();
+    }
 
     @Override
     public String description() {return "info : вывести в стандартный поток вывода информацию о коллекции";}

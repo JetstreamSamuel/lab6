@@ -1,4 +1,4 @@
-package org.utils;
+package org.server.service;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -6,7 +6,6 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
 public class FileManager {
     public FileManager() {}

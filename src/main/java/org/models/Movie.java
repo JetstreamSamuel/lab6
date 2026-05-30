@@ -3,13 +3,15 @@ package org.models;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.utils.adapters.XmlDateAdapter;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @XmlRootElement(name="movie")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Movie implements Comparable<Movie>{
+public class Movie implements Comparable<Movie>, Serializable {
     @XmlElement(name="id")
     private int id;
 
@@ -65,8 +67,10 @@ public class Movie implements Comparable<Movie>{
     public MpaaRating getMpaaRating() {return mpaaRating;}
     public Person getDirector() {return director;}
 
+    public void setId(int id) {this.id = id;}
     public void setName(String name) {this.name = name;}
     public void setCoordinates(Coordinates coordinates) {this.coordinates = coordinates;}
+    public void setCreationDate(LocalDateTime date) {this.creationDate = date;}
     public void setOscarsCount(long oscarsCount) {this.oscarsCount = oscarsCount;}
     public void setTagline(String tagline) {this.tagline = tagline;}
     public void setMpaaRating(MpaaRating mpaaRating) {this.mpaaRating = mpaaRating;}

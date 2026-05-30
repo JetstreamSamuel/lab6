@@ -1,4 +1,4 @@
-package org.utils;
+package org.server.service;
 
 import org.models.*;
 import java.time.LocalDateTime;
@@ -19,22 +19,36 @@ public class Context {
     @XmlElement(name = "movie")
     private HashMap<String, Movie> collection;
 
+    private static Context instance;
+
     public Context() {
         collection = new HashMap<>();
         creationDate = LocalDateTime.now();
+        instance = this;
+    }
+
+    public static Context getInstance() {
+        if (instance == null) {
+            instance = new Context();
+        }
+        return instance;
     }
 
     public void clear() {collection.clear();}
 
     public void add(String key, Movie movie) {collection.put(key, movie);}
 
-    public void show() {
+    public String show() {
         StringBuilder builder = new StringBuilder();
         for (var key : collection.keySet()) {
             Movie movie = collection.get(key);
             builder.append(key + ": " + movie.toString() + "\n");
         }
-        System.out.println(builder);
+        return builder.toString();
+    }
+
+    public void addMovie(String key, Movie movie) {
+        collection.put(key, movie);
     }
 
     public Set<String> getKeys() {return collection.keySet();}

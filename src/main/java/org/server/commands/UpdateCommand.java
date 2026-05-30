@@ -1,25 +1,23 @@
-package org.commands;
+package org.server.commands;
 
 import org.models.Movie;
-import org.utils.Context;
-import org.utils.ContextCreateHelper;
+import org.server.service.Context;
+import org.client.CreateMovie;
 
-import java.util.Scanner;
-
-public class UpdateCommand extends Command {
+public class UpdateCommand extends Command implements TypeOfArgument, TypeOfSecondArgument{
+    private Context context = Context.getInstance();
     public UpdateCommand() {super("update");}
 
     @Override
-    public void execute(Context context, String[] args, Scanner scanner) {
-        int id;
-        try {
-            id = Integer.parseInt(args[0]);
-        } catch (Exception e) {throw new ArgumentException("id должно быть int");}
+    public String execute() {
+        int id = args.id;
+        boolean flag = false;
         for (var key : context.getKeys()) {
             Movie prev = context.getElem(key);
 
             if (prev.getId().equals(id)) {
-                Movie newMovie = new ContextCreateHelper(scanner).createMovie(context);
+                flag = true;
+                Movie newMovie = args.movie;
                 prev.setCoordinates(newMovie.getCoordinates());
                 prev.setDirector(newMovie.getDirector());
                 prev.setName(newMovie.getName());
@@ -29,7 +27,20 @@ public class UpdateCommand extends Command {
                 prev.setUsaBoxOffice(newMovie.getUsaBoxOffice());
             }
         }
+        if (!flag) {return "No such Id";}
+        return "Updated";
     }
+    @Override
+    public String typeOfArgument() {return "Integer";}
+
+    @Override
+    public String typeOfSecondArgument() {return "Movie";}
+
+    @Override
+    public boolean needArg() {return true;}
+
+    @Override
+    public boolean needMoreThanOneArg() {return true;}
 
     @Override
     public String description() {return "update id {element} : " +

@@ -3,9 +3,11 @@ package org.models;
 
 import jakarta.xml.bind.annotation.*;
 
+import java.io.Serializable;
+
 @XmlRootElement(name="location")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Location {
+public class Location implements Serializable {
     @XmlElement(name="X")
     private Long x;
 

@@ -1,20 +1,21 @@
-package org.commands;
+package org.server.commands;
 
-import org.utils.Context;
-import org.utils.FileManager;
-
-import java.util.Scanner;
+import org.server.service.Context;
+import org.server.service.FileManager;
 
 public class SaveCommand extends Command{
+    private Context context = Context.getInstance();
     public SaveCommand() {super("save");}
 
     @Override
-    public void execute(Context context, String[] args, Scanner scanner) {
-        String path = String.join(" ", args);
+    public String execute() {
+        String path = args.key;
         try {
             FileManager.writeXML(context, path);
             System.out.println("Коллекция успешно сохранена в файл " + path);
         } catch (Exception e) {System.out.println(e.getMessage());}
+
+        return "Successfully saved";
     }
 
     @Override

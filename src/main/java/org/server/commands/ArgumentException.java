@@ -1,4 +1,4 @@
-package org.commands;
+package org.server.commands;
 
 public class ArgumentException extends RuntimeException {
     public ArgumentException(String message) {super(message);}

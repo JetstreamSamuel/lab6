@@ -1,20 +1,20 @@
-package org.commands;
+package org.server.commands;
 
-import org.utils.Context;
+import org.server.service.Context;
 import org.models.Movie;
-import java.util.Scanner;
 
 public class MaxByNameCommand extends Command{
+    private Context context = Context.getInstance();
     public MaxByNameCommand() {super("max_by_name");}
 
     @Override
-    public void execute(Context context, String[] args, Scanner scanner) {
+    public String execute() {
         Movie target = context.getElem((String) context.getKeys().toArray()[0]);
         for (var key : context.getKeys()) {
             Movie prev = context.getElem(key);
             if (prev.getName().compareTo(target.getName()) > 0) {target = prev;}
         }
-        System.out.println(target);
+        return target.toString();
     }
 
     @Override

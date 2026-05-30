@@ -1,19 +1,27 @@
-package org.commands;
+package org.server.commands;
 
-import org.utils.Context;
+import org.server.service.Context;
 
-import java.util.Scanner;
-
-public class RemoveLowerKeyCommand extends Command{
+public class RemoveLowerKeyCommand extends Command implements TypeOfArgument{
+    private Context context = Context.getInstance();
     public RemoveLowerKeyCommand() {super("remove_lower_key");}
 
     @Override
-    public void execute(Context context, String[] args, Scanner scanner) {
-        String bigKey = String.join(" ", args);
+    public String execute() {
+        String bigKey = args.key;
         for (var key : context.getKeys()) {
             if (bigKey.compareTo(key) > 0) {context.removeKey(key);}
         }
+        return "Removed lower";
     }
+
+    @Override
+    public String typeOfArgument() {
+        return "String";
+    }
+
+    @Override
+    public boolean needArg() {return true;}
 
     @Override
     public String description() {return "remove_lower_key null : " +

@@ -1,19 +1,20 @@
-package org.commands;
+package org.server.commands;
 
-import org.utils.Context;
+import org.server.service.Context;
 
 import java.util.*;
 
 public class PrintUniqueTaglineCommand extends Command{
+    private Context context = Context.getInstance();
     public PrintUniqueTaglineCommand() {super("print_unique_tagline");}
 
     @Override
-    public void execute(Context context, String[] args, Scanner scanner) {
+    public String execute() {
         Set<String> taglines = new HashSet<>();
         for (var key : context.getKeys()){
             taglines.add(context.getElem(key).getTagline());
         }
-        taglines.forEach(System.out::print);
+        return taglines.toString();
     }
 
     @Override
