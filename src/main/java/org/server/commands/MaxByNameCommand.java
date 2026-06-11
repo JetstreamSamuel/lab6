@@ -3,18 +3,19 @@ package org.server.commands;
 import org.server.service.Context;
 import org.models.Movie;
 
+import java.util.Comparator;
+
 public class MaxByNameCommand extends Command{
     private Context context = Context.getInstance();
     public MaxByNameCommand() {super("max_by_name");}
 
     @Override
     public String execute() {
-        Movie target = context.getElem((String) context.getKeys().toArray()[0]);
-        for (var key : context.getKeys()) {
-            Movie prev = context.getElem(key);
-            if (prev.getName().compareTo(target.getName()) > 0) {target = prev;}
-        }
-        return target.toString();
+        Movie target = context.getKeys().stream()
+                .map(context::getElem)
+                .max(Comparator.comparing(Movie::getName))
+                .orElse(null);
+        return target != null ? target.toString() : "Коллекция пуста";
     }
 
     @Override

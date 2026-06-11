@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.utils.adapters.XmlDateAdapter;
@@ -39,12 +41,9 @@ public class Context {
     public void add(String key, Movie movie) {collection.put(key, movie);}
 
     public String show() {
-        StringBuilder builder = new StringBuilder();
-        for (var key : collection.keySet()) {
-            Movie movie = collection.get(key);
-            builder.append(key + ": " + movie.toString() + "\n");
-        }
-        return builder.toString();
+        return collection.entrySet().stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue().toString())
+                .collect(Collectors.joining("\n"));
     }
 
     public void addMovie(String key, Movie movie) {

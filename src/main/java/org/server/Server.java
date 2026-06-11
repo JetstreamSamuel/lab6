@@ -42,8 +42,8 @@ public class Server {
 
     public static void main(String[] args){
         try {
-            InetAddress address = InetAddress.getByName("127.0.0.1");
-            Server server = new Server(address,12345);
+            InetAddress address = InetAddress.getByName("0.0.0.0");
+            Server server = new Server(address,35555);
 
             server.startServer();
         } catch (Exception e) {

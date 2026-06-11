@@ -1,8 +1,8 @@
 package org.server.commands;
 
+import org.models.Movie;
 import org.server.service.Context;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class PrintUsaBoxOfficeCommand extends Command{
     private Context context = Context.getInstance();
@@ -10,13 +10,12 @@ public class PrintUsaBoxOfficeCommand extends Command{
 
     @Override
     public String execute() {
-        ArrayList<Long> list = new ArrayList<>();
-        for (var key : context.getKeys()) {
-            list.add(Long.valueOf(context.getElem(key).getUsaBoxOffice()));
-        }
-        Collections.sort(list);
-        return list.toString();
-
+        return context.getKeys().stream()
+                .map(context::getElem)
+                .mapToLong(Movie::getUsaBoxOffice)
+                .sorted()
+                .boxed()
+                .collect(Collectors.toList()).toString();
     }
 
     @Override

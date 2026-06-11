@@ -15,8 +15,8 @@ import java.util.Scanner;
 
 
 public class ClientConsole {
-    private static final String SERVER_HOST = "localhost";
-    private static final int SERVER_PORT = 12345;
+    private static final String SERVER_HOST = "0.0.0.0";
+    private static final int SERVER_PORT = 35555;
     private static final Logger logger = LogManager.getLogger(ClientConsole.class);
     private Map<String, CommandInfo> serverCommands;
 

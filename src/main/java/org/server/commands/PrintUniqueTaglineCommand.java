@@ -1,8 +1,10 @@
 package org.server.commands;
 
+import org.models.Movie;
 import org.server.service.Context;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PrintUniqueTaglineCommand extends Command{
     private Context context = Context.getInstance();
@@ -10,11 +12,10 @@ public class PrintUniqueTaglineCommand extends Command{
 
     @Override
     public String execute() {
-        Set<String> taglines = new HashSet<>();
-        for (var key : context.getKeys()){
-            taglines.add(context.getElem(key).getTagline());
-        }
-        return taglines.toString();
+        return context.getKeys().stream()
+                .map(context::getElem)
+                .map(Movie::getTagline)
+                .collect(Collectors.toSet()).toString();
     }
 
     @Override
